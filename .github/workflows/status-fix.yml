@@ -1,0 +1,7 @@
+﻿name: CI Status Fix
+on: [push]
+jobs:
+  success:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Firebase project - No build required. Live at: https://muneco-8a8e9.web.app"
