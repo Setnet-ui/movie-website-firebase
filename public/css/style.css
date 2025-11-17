@@ -187,23 +187,13 @@ body {
 
 .movie-poster {
     width: 100%;
-    height: 200px; /* keeps uniform card height */
+    height: 200px;
     background: var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* crop excess image */
     color: var(--text-muted);
 }
-
-.movie-poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* fill container while keeping aspect ratio */
-    object-position: center; /* center the important part of image */
-    display: block;
-}
-
 
 .movie-info {
     padding: 1.5rem;
