@@ -1,0 +1,24 @@
+{
+  "name": "movie-website-firebase",
+  "version": "1.0.0",
+  "description": "Welcome to movie theater",
+  "main": "public/index.html",
+  "scripts": {
+    "dev": "live-server public",
+    "build": "npm run build:functions",
+    "build:functions": "cd functions && npm run build",
+    "serve": "firebase serve",
+    "deploy": "firebase deploy",
+    "emulators": "firebase emulators:start"
+  },
+  "keywords": [
+    "firebase",
+    "movie",
+    "website"
+  ],
+  "author": "Elifuraha Muna",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}

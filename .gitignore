@@ -1,0 +1,18 @@
+# Node modules
+node_modules/
+
+# Firebase local files
+.firebase/
+functions/node_modules/
+
+# Uploaded files
+public/uploads/
+
+# Mac system files
+.DS_Store
+
+# Environment variables
+.env
+
+# Firebase project config
+.firebaserc

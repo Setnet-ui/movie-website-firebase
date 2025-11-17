@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHub - Download Movies</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-film"></i>
+                <span>MovieHub</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#movies" class="nav-link">Movies</a>
+                <a href="#upload" class="nav-link">Upload</a>
+                <div id="auth-buttons">
+                    <button id="login-btn" class="btn btn-outline">Login</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section id="home" class="hero section active">
+                <div class="hero-content">
+                    <h1>Welcome to MovieHub</h1>
+                    <p>Download your favorite movies in high quality</p>
+                    <button id="explore-btn" class="btn btn-primary">
+                        Explore Movies <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Movies Section -->
+            <section id="movies" class="movies-section section">
+                <div class="section-header">
+                    <h2>Available Movies</h2>
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search movies...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div id="movies-grid" class="movies-grid">
+                    <!-- Movies will be loaded here -->
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading movies...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section id="upload" class="upload-section section">
+                <div class="section-header">
+                    <h2>Upload Movie</h2>
+                    <p>Share your movies with the community</p>
+                </div>
+                <div id="upload-container">
+                    <div class="upload-area" id="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your movie file here</h3>
+                        <p>or click to browse</p>
+                        <input type="file" id="file-input" accept=".mp4,.avi,.mkv,.mov" hidden>
+                        <button class="btn btn-outline" onclick="document.getElementById('file-input').click()">
+                            Select File
+                        </button>
+                    </div>
+                    <form id="movie-form" class="movie-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="movie-title">Movie Title</label>
+                            <input type="text" id="movie-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="movie-description">Description</label>
+                            <textarea id="movie-description" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Selected File: <span id="file-name"></span></label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="app.cancelUpload()">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="upload-btn">
+                                Upload Movie
+                            </button>
+                        </div>
+                    </form>
+                    <div id="upload-progress" class="upload-progress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p id="progress-text">Uploading: 0%</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Login Modal -->
+        <div id="login-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Login to MovieHub</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div id="register-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Create Account</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
